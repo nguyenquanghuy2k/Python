@@ -5,7 +5,7 @@ from tkinter import *
 root = Tk()
 root.title("Simple Calculator") #tieu de phan mem
 
-e = Entry(root,width=50, borderwidth=5)
+e = Entry(root,width=35, borderwidth=5)
 e.grid(row=0, column=0, columnspan=3, padx= 10, pady= 10)
 
 def button_click(number):
@@ -66,7 +66,7 @@ def button_divide():
 
 
 #define Buttons
-button1= Button(root, text='1', padx=40, pady= 30, command=lambda:button_click(1))
+button1= Button(root, text='1', padx=40, pady= 20, command=lambda:button_click(1))
 button2= Button(root, text='2', padx=40, pady= 20, command=lambda:button_click(2))
 button3= Button(root, text='3', padx=40, pady= 20, command=lambda:button_click(3))
 button4= Button(root, text='4', padx=40, pady= 20, command=lambda:button_click(4))
@@ -86,7 +86,7 @@ button_divide=  Button(root, text='/', padx=41, pady= 20, command=button_divide)
 
 # Put the button on the screen
 
-button1.grid(row= 3, column=0)
+button1.grid(row = 3 , column = 0)
 button2.grid(row = 3, column = 1)
 button3.grid(row = 3, column = 2)
 
