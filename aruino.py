@@ -1,6 +1,6 @@
 # arduino_LED_user.py
 
-import serial
+import serial 
 import time
 
 # Define the serial port and baud rate.
