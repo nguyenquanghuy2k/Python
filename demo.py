@@ -20,10 +20,9 @@ max2.grid(row=2, column=2, columnspan=3)
 
 def myClick():
     cmin=min1.get()
-    type(cmin)
     print("gia tri min:",cmin)
     time.sleep(0.1)
-    ser.write(float(cmin))
+    ser.write(cmin)
     cmax=max2.get()
     print("gia tri max:",cmax)
     time.sleep(0.1)
