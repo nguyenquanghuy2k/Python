@@ -1,6 +1,7 @@
 # arduino_LED_user.py
-
+import readline
 from struct import pack
+from traceback import print_last
 import serial 
 import time
 from tkinter import *
@@ -19,42 +20,48 @@ max2 = Entry(root,width=10, borderwidth=5,font=("Courier", 20))
 max2.grid(row=2, column=2, columnspan=3)
 
 def myClick():
-    cmin=min1.get()
-    print("gia tri min:",cmin)
+    cmin=IntVar(min1.get())
+    print_last("gia tri min:",cmin)
     time.sleep(0.1)
     ser.write(cmin)
-    cmax=max2.get()
-    print("gia tri max:",cmax)
+    cmax=IntVar(max2.get())
+    print_last("gia tri max:",cmax)
     time.sleep(0.1)
     ser.write(cmax)
-
+def ketnoi():
+    kn=ser.readline()   
+    print_last("gia tri min:",kn)
+    
+    Mylabel4 =  Label(root, text = "CONNECTED",font=("Courier", 25)).grid(row=3,column=2)
+    
+    Mylabel5 =  Label(root, text = "CONNECTING",font=("Courier", 25)).grid(row=3,column=2)
 def led_on_off():
     user_input = input("\n Type on / off / quit : ")
     if user_input =="on":
         print("LED is on...")
         time.sleep(0.1) 
-        ser.write(b'A') 
+        ser.write(b'H') 
         led_on_off()
     elif user_input =="off":
         print("LED is off...")
         time.sleep(0.1)
-        ser.write(b'B')
+        ser.write(b'L')
         led_on_off()
     elif user_input =="quit" or user_input == "q":
         print("Program Exiting")
         time.sleep(0.1)
-        ser.write(b'B')
+        ser.write(b'L')
         ser.close()
     else:
         print("Invalid input. Type on / off / quit.")
         led_on_off()
-button1=Button(root,text='ON',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=myClick) 
-button2=Button(root,text='OFF',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=led_on_off)
-button3=Button(root,text='QUIT',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=led_on_off)
+button1=Button(root,text='SEND DATA',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=myClick) 
+button2=Button(root,text='CONNECTION TEST',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=ketnoi)
+#button3=Button(root,text='QUIT',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=led_on_off)
 
 button1.grid(row=3,column=0)
 button2.grid(row=3,column=1)
-button3.grid(row=3,column=2)
+#button3.grid(row=3,column=2)
 
 time.sleep(2) # wait for the serial connection to initialize 
 
