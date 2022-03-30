@@ -1,5 +1,7 @@
 # arduino_LED_user.py
-import readline
+#import readline
+from ast import Str
+from sqlite3 import connect
 from struct import pack
 from traceback import print_last
 import serial 
@@ -20,21 +22,26 @@ max2 = Entry(root,width=10, borderwidth=5,font=("Courier", 20))
 max2.grid(row=2, column=2, columnspan=3)
 
 def myClick():
-    cmin=IntVar(min1.get())
-    print_last("gia tri min:",cmin)
+    cmin= (min1.get())
+    cminb=bytes(cmin,'UTF-8')
+    print("gia tri min:",cminb)
     time.sleep(0.1)
-    ser.write(cmin)
-    cmax=IntVar(max2.get())
-    print_last("gia tri max:",cmax)
+    ser.write(cminb)
+    cmax=(max2.get())
+    cmaxb=bytes(cmax,'UTF-8')
+    print("gia tri max:",cmaxb)
     time.sleep(0.1)
-    ser.write(cmax)
+    ser.write(cmaxb)
 def ketnoi():
-    kn=ser.readline()   
-    print_last("gia tri min:",kn)
-    
-    Mylabel4 =  Label(root, text = "CONNECTED",font=("Courier", 25)).grid(row=3,column=2)
-    
-    Mylabel5 =  Label(root, text = "CONNECTING",font=("Courier", 25)).grid(row=3,column=2)
+    ser.write(b'H') 
+    kn = (ser.readline()).decode()
+    kn1 = kn.rstrip()
+    print(kn1)
+    time.sleep(0.1)         
+    if kn1 == "daketnoi":
+        Mylabel4 =  Label(root, text = "CONNECTED",font=("Courier", 25)).grid(row=1,column=1)
+    else :
+        Mylabel5 =  Label(root, text = "CONNECTING",font=("Courier", 25)).grid(row=1,column=1)
 def led_on_off():
     user_input = input("\n Type on / off / quit : ")
     if user_input =="on":
@@ -57,13 +64,12 @@ def led_on_off():
         led_on_off()
 button1=Button(root,text='SEND DATA',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=myClick) 
 button2=Button(root,text='CONNECTION TEST',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=ketnoi)
-#button3=Button(root,text='QUIT',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=led_on_off)
+button3=Button(root,text='QUIT',padx= 30, pady=10,fg='#6699FF',bg='#66FF99',command=led_on_off)
 
 button1.grid(row=3,column=0)
 button2.grid(row=3,column=1)
-#button3.grid(row=3,column=2)
+button3.grid(row=3,column=2)
 
 time.sleep(2) # wait for the serial connection to initialize 
-
 
 root.mainloop() # vong lap de man hinh luon xuat hien
