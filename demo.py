@@ -1,6 +1,7 @@
 # arduino_LED_user.py
 #import readline
 from ast import Str
+from pdb import Restart
 from sqlite3 import connect
 from struct import pack
 from traceback import print_last
@@ -10,7 +11,7 @@ from tkinter import *
 
 # Define the serial port and baud rate.
 # Ensure the 'COM#' corresponds to what was seen in the Windows Device Manager
-ser = serial.Serial('COM8', 9600)
+ser = serial.Serial('COM6', 9600)
 root = Tk()
 root.title("LCD-MITSUTOYO") #tieu de phan mem
 Mylabel1 =  Label(root, text = "TOWA VIET NAM",font=("Courier", 44)).grid(row=0,column=1)
@@ -33,15 +34,18 @@ def myClick():
     time.sleep(0.1)
     ser.write(cmaxb)
 def ketnoi():
+    Restart()
+    Mylabel5 =  Label(root, text = "CONNECTING",font=("Courier", 25)).grid(row=1,column=1)
     ser.write(b'H') 
     kn = (ser.readline()).decode()
     kn1 = kn.rstrip()
     print(kn1)
-    time.sleep(0.1)         
+    time.sleep(0.5)         
     if kn1 == "daketnoi":
-        Mylabel4 =  Label(root, text = "CONNECTED",font=("Courier", 25)).grid(row=1,column=1)
+        Mylabel4 =  Label(root, text = "  CONNECTED  ",font=("Courier", 25)).grid(row=1,column=1)
     else :
         Mylabel5 =  Label(root, text = "CONNECTING",font=("Courier", 25)).grid(row=1,column=1)
+    
 def led_on_off():
     user_input = input("\n Type on / off / quit : ")
     if user_input =="on":
